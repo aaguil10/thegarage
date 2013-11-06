@@ -1,0 +1,117 @@
+{{extend 'layout.html'}}
+
+<h3>
+    Items You've Been Assigned
+</h3>
+
+<div id="bar">
+    {{=A('Home', _class='btn', _href=URL('default','index'))}} 
+    {{=A('New Request', _class='btn', _href=URL('default','todoForm'))}} 
+    {{=A('Your Requests', _class='btn', _href=URL('default','assignedItems'))}}
+</div>
+<br>
+<div id="waiting">
+    <h4>
+        Awaiting Confirmation
+    </h4>
+    <table border="1">
+        <tr>
+            <td>
+                Item Name
+            </td>
+            <td>
+                Item Description
+            </td>
+            <td>
+                Item Status
+            </td>
+            <td>
+                Accept / Decline
+            </td>
+        </tr>
+        {{for r in list1:}}
+            {{if r.accepted=='waiting':}}
+                <tr>
+                    <td>
+                        {{=r.To_Do}}
+                    </td>
+                    <td>
+                        {{=r.description}}
+                    </td>
+                    <td>
+                        {{=r.status}}
+                    </td>
+                    <td>
+                        {{=A('Accept', _class='btn', _href=URL('default','accept', args=r.id))}} / 
+                        {{=A('Decline', _class='btn', _href=URL('default','decline', args=r.id))}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+    </table>
+</div>
+
+<div id="accepted">
+    <h4>
+        Accepted
+    </h4>
+    <table border="1">
+        <tr>
+            <td>
+                Item Name
+            </td>
+            <td>
+                Item Description
+            </td>
+            <td>
+                Item Status
+            </td>
+            <td>
+                Mark Completed
+            </td>
+        </tr>
+        {{for r in list1:}}
+            {{if r.accepted=='yes':}}
+                <tr>
+                    <td>
+                        {{=r.To_Do}}
+                    </td>
+                    <td>
+                        {{=r.description}}
+                    </td>
+                    <td>
+                        {{=r.status}}
+                    </td>
+                    <td>
+                        {{if r.status == 'In Progress':}}
+                            {{=A('Completed', _class='btn', _href=URL('default','completed', args=r.id))}}
+                        {{pass}}
+                    </td>
+                </tr>
+            {{pass}}
+        {{pass}}
+    </table></div>
+
+<style type="text/css">
+    #waiting
+    {
+        position:absolute;
+        overflow:hidden;
+        max-width:45em;
+        border:thin black solid;
+        border-style:solid none none solid;
+        padding:10px;
+        display:block;
+    }
+    #accepted
+    {
+        margin-left: 50em;
+        position:absolute;
+        overflow:hidden;
+        max-width:30em;
+        border:thin black solid;
+        border-style:solid none none solid;
+        padding:10px;
+        display:block;
+    }
+</style>

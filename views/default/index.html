@@ -1,0 +1,110 @@
+{{extend 'layout.html'}}
+<!--  -->
+
+
+
+<html lang="en">
+<head>
+	<style type="text/css" media="screen, print, projection">
+	body,
+	html {
+		margin:0;
+		padding:0;
+	}
+	#wrap {
+		width:750px;
+		margin:0 auto;
+	}
+	#main {
+		float:left;
+		width:80%;
+		padding:5px;
+        #overflow:hidden;
+	}
+	h2 {
+		margin:0 0 1em;
+	}
+	#sidebar {
+		float:right;
+		width:15%;
+		padding:10px;
+		background:#99c;
+        #overflow:hidden;
+
+	}
+	#footer {
+		clear:both;
+		padding:5px 10px;
+
+	}
+    div.containerful{
+            width:26%;
+            height:length;
+            border:1px solid red;
+            margin-right:10px;
+            margin-bottom:25px;
+            padding:5px;
+            float:left;
+            overflow:hidden;
+    }
+        div.boxTitle{
+            border:1px solid blue;
+            font-size:20px
+            padding:5px;
+            
+        }
+
+	</style>
+<center>
+         <form id="cse-search-box" action="http://google.com/cse">
+  <input type="hidden" name="cx" value="YOUR SEARCH ENGINE ID goes here" />
+  <input type="hidden" name="ie" value="UTF-8" />
+  <input type="text" name="q" size="15" />
+  <input type="submit" name="sa" value="Search" />
+</form>
+    </center>
+</head>
+<body>
+
+	<div id="main">
+		<h2>Recently Borrowed</h2>
+		<div class="containerful" align="center">
+            <div class="boxTitle">
+                Lamborgini 654x
+            </div>
+            <img src="http://www.hdwallpapersinn.com/wp-content/uploads/2012/10/Lamborghini-Cars-HD-Wallpaper.jpg" alt="Smiley face" >
+        </div>
+
+
+
+        <div class="containerful" align="center">
+            <div class="boxTitle">
+                Little Brother
+            </div>
+            <img src="http://www.artfire.com/uploads/product/6/426/55426/2755426/2755426/large/for_sale_little_brother_by_big_brother_boys_custom_toddler_kids_shirt_24c9a2eb.jpg" alt="Smiley face" >
+        </div>
+
+
+        <div class="containerful" align="center">
+            <img src="http://krunalautoinfo.com/wp-content/uploads/2013/04/peugeot_onyx_concept_car_2012-wide1.jpg" alt="Smiley face" >
+        </div>
+
+	</div>
+    
+
+	<div id="sidebar">
+
+		<h2>Categories</h2>
+		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris vel magna.</p>
+		<ul>
+			<li><a href="/">Books</a></li>
+			<li><a href="/">Games</a></li>
+			<li><a href="/">Electronics</a></li>
+			<li><a href="/">Clothing</a></li>
+			<li><a href="/">Food</a></li>
+		</ul>
+	</div>
+	
+
+</body>
+</html>

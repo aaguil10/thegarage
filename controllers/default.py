@@ -18,58 +18,27 @@ def index():
     if you need a simple wiki simple replace the two lines below with:
     return auth.wiki()
     """
-
-    
     return dict()
+
+
 def About_us():
     return dict()
 
+
 def available():
-    return dict()
+    avacontent = URL('default', 'friStuff', )
+    return dict(avacontent=avacontent,)
+
 
 def Borrowed():
     return dict()
 
-@auth.requires_login()
-def todoForm():
-    form = SQLFORM(db.itemList)
-    form.vars.from_user = auth.user.email
-    if form.process().accepted:
-        redirect(URL('default', 'index')) 
-    return dict(form=form)
-
-@auth.requires_login()
-def itemsAssigned():
-    list1 = db(db.itemList.for_user==auth.user.email).select()
-    return dict(list1=list1)
-
-@auth.requires_login()
-def assignedItems():
-    list1 = db(db.itemList.from_user==auth.user.email).select()
-    return dict(list1=list1)
-
-def completed():
-    item = db(db.itemList.id == request.args(0)).select().first()
-    item.update_record(status = 'Completed')
-    redirect(URL('default', 'itemsAssigned'))
-    return dict()
-
-def accept():
-    item = db(db.itemList.id == request.args(0)).select().first()
-    item.update_record(accepted = 'yes')
-    redirect(URL('default', 'itemsAssigned'))
-    return dict()
-
-def decline():
-    item = db(db.itemList.id == request.args(0)).select().first()
-    item.update_record(accepted = 'no')
-    redirect(URL('default', 'itemsAssigned'))
-    return dict()
 
 def friStuff():
     #this will be in charge of diplays friends stuff
     
     return dict()
+
 
 def user():
     """

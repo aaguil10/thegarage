@@ -24,7 +24,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Your Daddy.com'), False, URL('default', 'index'), [] )
+    (T('Your Garage'), False, URL('default', 'index'), [] )
 ]
 
 DEVELOPMENT_MENU = True

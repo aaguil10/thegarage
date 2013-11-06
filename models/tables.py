@@ -1,43 +1,30 @@
 # coding: utf8
 from datetime import datetime
 
-db.define_table('itemList',
-             Field('To_Do', 'string'),
-             #Field('file', 'upload'),
-             #Field('image_id', 'reference image'),
-             #Field('author'),
-             Field('description', 'text'),
-             #Field('random', default=randNum),
-             Field('for_user', requires=IS_EMAIL()),
-             Field('from_user'),
-             Field('status', 'string', default='In Progress'),
-             Field('accepted', 'string', default='waiting')
-             #Field('numviews', 'integer', default=0),
-             )
-
+#Typical stuff thinking of just adding rep(reputation of the user returning stuff) on to auth user. maybe a profile icon too.
 db.define_table('person',
                 Field('name', 'string'),
                 Field('email', 'string', requires=IS_EMAIL()),
                 Field('a_id', db.auth_user, default=auth.user_id), #a_id is the auth user, will be used in items table
+                Field('rep', 'float', default=10.00),
                 
                 )
 
+#We will search through items to find the user's items
 db.define_table('items',
-            Field('item_owner', db.auth_user, default=auth.user_id),
-            Field('start_date', 'datetime', default=datetime.utcnow()),
-            Field('end_date', 'datetime'),
-            Field('borrower', 'string', default=None),
-            Field('item_image', 'upload'),
-            Field('description', 'text'),
-            Field('tag', 'string'),
+                Field('item_owner', db.auth_user, default=auth.user_id),
+                Field('start_date', 'datetime', default=datetime.utcnow()),
+                Field('end_date', 'datetime'),
+                Field('borrower', 'string', default=None),
+                Field('item_image', 'upload'),
+                Field('description', 'text'),
+                Field('tag', 'string'),
 
-    )
+            )
 
-
-
-db.itemList.accepted.writable = db.itemList.accepted.readable = False
-db.itemList.status.writable = db.itemList.status.readable = False
-db.itemList.from_user.writable = db.itemList.from_user.readable = False
-db.itemList.for_user.requires = [IS_IN_DB(db, db.auth_user.email)]
-db.itemList.description.requires = IS_NOT_EMPTY()
-db.itemList.To_Do.requires = IS_NOT_EMPTY()
+#This is how we will keep track of the users friends
+db.define_table('friend',
+                Field('pOne', db.auth_user, default=None),
+                Field('pTwo', db.auth_user, default=None),
+                
+               )

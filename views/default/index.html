@@ -19,7 +19,7 @@
 		float:left;
 		width:80%;
 		padding:5px;
-        #overflow:hidden;
+        overflow:hidden;
 	}
 	h2 {
 		margin:0 0 1em;
@@ -39,7 +39,6 @@
 	}
     div.containerful{
             width:26%;
-            height:length;
             border:1px solid red;
             margin-right:10px;
             margin-bottom:25px;
@@ -55,6 +54,13 @@
         }
 
 	</style>
+
+    <script type="text/javascript"><!--
+        var cw = $('.containerful').width();
+        $('.containerful').css({'height': cw + 'px'});
+    
+    --></script>
+    
 <center>
          <form id="cse-search-box" action="http://google.com/cse">
   <input type="hidden" name="cx" value="YOUR SEARCH ENGINE ID goes here" />
@@ -72,7 +78,7 @@
             <div class="boxTitle">
                 Lamborgini 654x
             </div>
-            <img src="http://www.hdwallpapersinn.com/wp-content/uploads/2012/10/Lamborghini-Cars-HD-Wallpaper.jpg" alt="Smiley face" >
+            <img src="http://www.hdwallpapersinn.com/wp-content/uploads/2012/10/Lamborghini-Cars-HD-Wallpaper.jpg" alt="Smiley face" max-height:100%>
         </div>
 
 

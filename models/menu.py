@@ -5,7 +5,7 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('Daddy'),XML('&trade;&nbsp;'),
+response.logo = A(B('The Garage'),XML('&trade;&nbsp;'),
                   _class="brand", _href=URL('default', 'index'))
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
@@ -32,7 +32,7 @@ DEVELOPMENT_MENU = True
 #########################################################################
 ## provide shortcuts for development. remove in production
 #########################################################################
-
+# resposible to menu stuff
 def _():
     # shortcuts
     app = request.application

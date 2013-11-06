@@ -27,6 +27,7 @@ db.define_table('items',
             Field('start_date', 'datetime', default=datetime.utcnow()),
             Field('end_date', 'datetime'),
             Field('borrower', 'string', default=None),
+            Field('item_image', 'upload'),
             Field('description', 'text'),
             Field('tag', 'string'),
 

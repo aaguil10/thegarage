@@ -23,13 +23,18 @@
 		padding:5px;
         overflow:hidden;
 	}
-    #sidebar {
-		float:right;
-		width:15%;
-		padding:10px;
-		background:#99c;
+    #page-wrap { 
+        width: 600px; 
+        margin: 15px auto; 
+        position: relative; 
+    }
 
-	}
+     #sidebar { 
+        width: 190px; 
+        position: fixed; 
+        margin-left: 900px;
+        background: pink
+    }
 
     #footer {
 		clear:both;
@@ -62,7 +67,7 @@
         }
 
 	</style>
-    
+    {{=A('Add Item', _href=URL(r=request, f='create'), _class='fake btn')}}
     <!--This is the search bar... does not work yet -->
 <center>
     <form id="cse-search-box" action="http://google.com/cse">
@@ -72,6 +77,8 @@
         <input type="submit" name="sa" value="Search" />
     </form>
 </center>
+    
+    
 
 
 </head>

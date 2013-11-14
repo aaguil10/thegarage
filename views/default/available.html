@@ -1,4 +1,7 @@
 {{extend 'layout.html'}}
+{{import logging
+  logger = logging.getLogger("web2py.app.myapp")
+  logger.setLevel(logging.DEBUG)}}
 <!--  -->
 
 <style>
@@ -17,21 +20,29 @@
 
 <!--Table should contain list of friends when clicked it will update iframe with avalile items of friend --> 
 <table id='friendsList' width="30%" border="0" cellspacing="0" cellpadding="1" align='left'>
+    {{logger.debug("testing logger")}}
     <tr>
         <td><b>Friends</b></td>
     </tr>
-    <tr>
-        <td>*Alan</td>
-    </tr>
-    <tr>
-        <td>Vanda</td>
-    </tr>
-    <tr>
-        <td>Jason</td>
-    </tr>
-    <tr>
-        <td>Alejandro</td>
-    </tr>
+    <!---Searches right side of friend table--->
+    {{for r in listfrd1:}}
+    {{    listprs = db(db.person.a_id == r.pTwo).select()}}
+    {{for x in listprs:}}
+        <tr>
+            <td>{{=x.name}}</td>
+        </tr>
+    {{pass}}
+    {{pass}}
+    
+    <!---Searches left side of friend table--->
+    {{for r in listfrd2:}}
+    {{    listprs = db(db.person.a_id == r.pOne).select()}}
+    {{for x in listprs:}}
+        <tr>
+            <td>{{=x.name}}</td>
+        </tr>
+    {{pass}}
+    {{pass}}
 </table>
 
 <!-- iframe loads fristuff page with id of friend and loads the avalible items-->

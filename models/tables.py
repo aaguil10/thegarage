@@ -12,7 +12,7 @@ db.define_table('person',
 
 #We will search through items to find the user's items
 db.define_table('items',
-                Field('item_owner', db.auth_user, default=auth.user_id),
+                Field('item_owner', 'string', default=auth.user_id),
                 Field('start_date', 'datetime', default=datetime.utcnow()),
                 Field('end_date', 'datetime'),
                 Field('borrower', 'string', default=None),

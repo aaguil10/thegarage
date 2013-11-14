@@ -9,6 +9,18 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
+def create():
+    import random
+    form = SQLFORM(db.items)
+    form=SQLFORM(db.items)
+    if form.process().accepted:
+        session.flash = 'List created! Click buttons below to view/edit lists.'
+        redirect(URL('index'))
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form=form)
 
 def index():
     """
@@ -20,36 +32,6 @@ def index():
     """
     return dict()
 
-def create():
-    form=SQLFORM(db.items)
-    if form.process().accepted:
-        session.flash = 'List created! Click buttons below to view/edit lists.'
-        redirect(URL('default', 'checkdebuger', ))
-    elif form.errors:
-        response.flash = 'form has errors'
-    else:
-        response.flash = 'please fill the form'
-        
-        
-    frd=SQLFORM(db.friend)
-    if frd.process().accepted:
-        session.flash = 'List created! Click buttons below to view/edit lists.'
-        redirect(URL('default', 'checkdebuger', ))
-    elif form.errors:
-        response.flash = 'form has errors'
-    else:
-        response.flash = 'please fill the form'
-        
-    prs=SQLFORM(db.person)
-    if prs.process().accepted:
-        session.flash = 'List created! Click buttons below to view/edit lists.'
-        redirect(URL('default', 'checkdebuger', ))
-    elif form.errors:
-        response.flash = 'form has errors'
-    else:
-        response.flash = 'please fill the form'
-    return dict(form=form, frd=frd, prs=prs, )
-
 
 def About_us():
     return dict()
@@ -57,12 +39,7 @@ def About_us():
 
 def available():
     avacontent = URL('default', 'friStuff', )
-    
-    listfrd1 = db(db.friend.pOne == auth.user_id).select()
-    listfrd2 = db(db.friend.pTwo == auth.user_id).select()
-
-    
-    return dict(avacontent=avacontent, listfrd1=listfrd1, listfrd2=listfrd2, )
+    return dict(avacontent=avacontent,)
 
 
 def Borrowed():
@@ -73,30 +50,6 @@ def friStuff():
     #this will be in charge of diplays friends stuff
     
     return dict()
-
-def checkdebuger():
-    q = db.items
-    grid = SQLFORM.grid(q,
-        searchable=True,
-        fields=[db.items.item_owner, db.items.borrower, db.items.item_image, db.items.tag],
-        csv=True, details=True, create=True, editable=True, deletable=True,
-        )
-    
-    f = db.friend
-    fgrid = SQLFORM.grid(f,
-        searchable=True,
-        fields=[db.friend.pOne, db.friend.pTwo],
-        csv=True, details=True, create=True, editable=True, deletable=True,
-        )
-        
-    p = db.person
-    pgrid = SQLFORM.grid(p,
-        searchable=True,
-        fields=[db.person.name, db.person.a_id, db.person.email, db.person.rep, ],
-        csv=True, details=True, create=True, editable=True, deletable=True,
-        )
-    
-    return dict(grid=grid, fgrid=fgrid,pgrid=pgrid )
 
 
 def user():

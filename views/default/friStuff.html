@@ -1,5 +1,8 @@
 <html>
 <!-- this page is loaded in avalible page in an iframe to diplay friends stuff -->
+    {{if request.args(0) == URL('default', 'friStuff', ):
+        redirect(URL('default', 'inst_fri', )) 
+    pass}}
     
     <style>
         html{

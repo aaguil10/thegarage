@@ -64,6 +64,9 @@ def available():
     
     return dict(avacontent=avacontent, listfrd1=listfrd1, listfrd2=listfrd2, )
 
+def returnifurl(a_id):
+    urlid = URL('default', 'friStuff',args=[a_id] )
+    return dict(urlid=urlid, )
 
 def Borrowed():
     return dict()
@@ -71,8 +74,18 @@ def Borrowed():
 
 def friStuff():
     #this will be in charge of diplays friends stuff
+    client_id = request.args(0)
+    idref = db.person(request.args(0))
+    name = idref.name
+    pic_list = []
     
-    return dict()
+    list_items = db(db.items.item_owner == client_id).select()
+    for r in list_items:
+        imgti = r.item_image
+        #imgti[17:]
+        pic_list.append(URL('download', args=[imgti]))
+
+    return dict(list_items=list_items, client_id=client_id, pic_list=pic_list, name=name, )
 
 def checkdebuger():
     q = db.items

@@ -5,21 +5,46 @@
 <!--  -->
 
 <style>
-    table{
+    html, body{
+        height: 100%;
+    }
+    
+    table#friendsList{
         margin-right:10px;
         margin-bottom:25px;
         padding:15px;
         float:left;
+        background-color:#2f4551;
+        color:#e5f1f7;
+        height: 100%;
         /*border:1px solid red;*/
         
     }
 
+    div.frdbox{
+        background-color:#2f4551;
+        height:30px;
+        color:#e5f1f7;
+        
+    }
+    
+    
 </style>
+
+<script>
+    function ifrchanger(leid){
+        var ifrd = document.getElementById('frdcont');
+        var urlid = "{{=avacontent}}" + "/" + leid;
+        ifrd.src = urlid;
+    }
+    
+</script>
+
 
 <h1>What your friends are offering</h1>
 
 <!--Table should contain list of friends when clicked it will update iframe with avalile items of friend --> 
-<table id='friendsList' width="30%" border="0" cellspacing="0" cellpadding="1" align='left'>
+<table id='friendsList' width="30%" height="100%" border="0" cellspacing="0" cellpadding="1" align='left'>
     {{logger.debug("testing logger")}}
     <tr>
         <td><b>Friends</b></td>
@@ -29,7 +54,7 @@
     {{    listprs = db(db.person.a_id == r.pTwo).select()}}
     {{for x in listprs:}}
         <tr>
-            <td>{{=x.name}}</td>
+            <td><div id="{{=x.a_id}}" class="frdbox" onclick="ifrchanger({{=x.a_id}})" >{{=x.name}}</div></td>
         </tr>
     {{pass}}
     {{pass}}
@@ -46,4 +71,17 @@
 </table>
 
 <!-- iframe loads fristuff page with id of friend and loads the avalible items-->
-<iframe src={{=avacontent}} align='right' width='60%' height='700px' frameborder="0"></iframe>
+<iframe id=frdcont src={{=avacontent}} align='right' width='60%' height='700px' frameborder="0"></iframe>
+
+<script>
+$( ".frdbox" ).on( "mouseover", function() {
+  $( this ).css( "background-color", "#3c9dd0" );
+  $( this ).css( "color", "#173d51" );
+});
+    
+$( ".frdbox" ).on( "mouseout", function() {
+  $( this ).css( "background-color", "#2f4551" );
+  $( this ).css( "color", "#e5f1f7" );
+});
+
+</script>

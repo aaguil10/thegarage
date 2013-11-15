@@ -5,18 +5,37 @@
         html{
             font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
         }
+        /*bebox are the squares that display recently added items*/
+    div.bebox{
+        width:200px;
+        height:200px;
+        border:1px solid red;
+        margin-right:10px;
+        margin-bottom:10px;
+        padding:5px;
+        float:left;
+        overflow:hidden;
+    }
+        
+        /*beboxTitle is the tile of item in bebox this class should always be inside bebox */
+    div.beboxTitle{
+        border:1px solid blue;
+        font-size:20px
+        padding:5px;
+            
+        }
 
     </style>
     
-    <h1>Alan's Garage</h1>
-    
-    <p>
-        Halo<br>
-        chem text book<br>
-        linkin park cd<br>
-        magic deck<br>
-        halloween costume<br>
-    </p>
+    <h1>{{=name}}'s Garage</h1>
+    {{for r in pic_list:}}
+		<div class="bebox" align="center">
+            <div class="beboxTitle">
+                Blue Jeans (New)
+            </div>
+            <img src="{{=r}}" alt="gia!" max-height:100%>
+        </div>
+    {{pass}}
 
-
+    {{=client_id}}
 </html>

@@ -49,8 +49,19 @@
         text-indent: 20px;
         line-height: 30px;
         font-weight:bold;
+        font-size:20px
     }
     
+    #frdcont{
+        position: absolute;
+        top: 250px;
+        left: 250px;    
+        height: 100%;
+        width:70%;
+        margin: 0;
+        padding: 0;
+        
+    }
     
 </style>
 
@@ -67,7 +78,7 @@
 <!--Table should contain list of friends when clicked it will update iframe with avalile items of friend --> 
 <div id="sidebar_rap">
     <ul id='friendsList'>
-        <li id="titlesidebar" style="text-indent: 20px;" style="height:30px;" >Friends</li>
+        <li id="titlesidebar" style="text-indent: 20px;" style="height:30px;" >Friends List</li>
         
         <!---Searches right side of friend table--->
         {{for r in listfrd1:}}
@@ -88,7 +99,7 @@
 </div>
 
 <!-- iframe loads fristuff page with id of friend and loads the avalible items-->
-<iframe id=frdcont src={{=avacontent}} align='right' width='60%' height='700px' frameborder="0"></iframe>
+<iframe id=frdcont src={{=avacontent}} frameborder="0px"></iframe>
 
 <script>
     

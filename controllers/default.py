@@ -64,13 +64,11 @@ def available():
     
     return dict(avacontent=avacontent, listfrd1=listfrd1, listfrd2=listfrd2, )
 
-#def returnifurl(a_id):
-#    urlid = URL('default', 'friStuff',args=[a_id] )
-#    return dict(urlid=urlid, )
-
 def Borrowed():
     return dict()
 
+def inst_fri():
+    return dict()
 
 def friStuff():
     #this will be in charge of diplays friends stuff

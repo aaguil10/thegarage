@@ -8,11 +8,12 @@
     html, body{
         height: 100%;
     }
-    
+
+    /*sidebar_rap friendslist and frdbox are the styles for the sidebar*/
     div#sidebar_rap{
         background-color:#2f4551;
         position: absolute;
-        top: 400px;
+        top: 250px;
         left: 0px;    
         height: 100%;
         width:250px;
@@ -21,30 +22,23 @@
     }
     
     ul#friendsList{
-        margin-right:0px;
-        margin-bottom:0px;
-        padding:0px;
         margin: 0;
-        float:left;
-        background-color:#2f4551;
-        color:#e5f1f7;
-        /*height: 100%;*/
+        padding:0px;
         box-sizing: border-box;
+        float:left;
         position: absolute;
         top: 30;
         left: 0;
-        /*border-spacing:10px 30px;*/
         list-style-type:none;
         display: list-item;
-        /*margin-bottom: 0.5em;*/
-        /*border:1px solid red;*/
+        color:#e5f1f7;
         
     }
 
     div.frdbox{
-        background-color:#2f4551;
         height:30px;
         width:250px;
+        background-color:#2f4551;
         color:#e5f1f7;
         line-height: 30px;
         text-indent: 20px;
@@ -61,6 +55,7 @@
 </style>
 
 <script>
+    //Changes the iframe src. urlid is the url of friends content
     function ifrchanger(leid){
         var ifrd = document.getElementById('frdcont');
         var urlid = "{{=avacontent}}" + "/" + leid;
@@ -69,42 +64,40 @@
     
 </script>
 
-
-<h1>What your friends are offering</h1>
-<div id="sidebar_rap" width="30%" height="100%">
-
 <!--Table should contain list of friends when clicked it will update iframe with avalile items of friend --> 
-<ul id='friendsList' width="30%" height="100%" border="0" cellspacing="0" cellpadding="1" align='left'>
-    {{logger.debug("testing logger")}}
-    <li id="titlesidebar" style="text-indent: 20px;" style="height:30px;" >Friends</li>
-    <!---Searches right side of friend table--->
-    {{for r in listfrd1:}}
-    {{    listprs = db(db.person.a_id == r.pTwo).select()}}
-    {{for x in listprs:}}
-            <li><div id="{{=x.a_id}}" class="frdbox" onclick="ifrchanger({{=x.a_id}})" >{{=x.name}}</div></li>
-    {{pass}}
-    {{pass}}
+<div id="sidebar_rap">
+    <ul id='friendsList'>
+        <li id="titlesidebar" style="text-indent: 20px;" style="height:30px;" >Friends</li>
+        
+        <!---Searches right side of friend table--->
+        {{for r in listfrd1:}}
+            {{listprs = db(db.person.a_id == r.pTwo).select()}}
+            {{for x in listprs:}}
+                <li><div id="{{=x.a_id}}" class="frdbox" onclick="ifrchanger({{=x.a_id}})" >{{=x.name}}</div></li>
+            {{pass}}
+        {{pass}}
     
-    <!---Searches left side of friend table--->
-    {{for r in listfrd2:}}
-    {{    listprs = db(db.person.a_id == r.pOne).select()}}
-    {{for x in listprs:}}
-
-            <li><div id="{{=x.a_id}}" class="frdbox" onclick="ifrchanger({{=x.a_id}})" >{{=x.name}}</div></li>
-    {{pass}}
-    {{pass}}
-</ul>
+        <!---Searches left side of friend table--->
+        {{for r in listfrd2:}}
+            {{listprs = db(db.person.a_id == r.pOne).select()}}
+            {{for x in listprs:}}
+                <li><div id="{{=x.a_id}}" class="frdbox" onclick="ifrchanger({{=x.a_id}})" >{{=x.name}}</div></li>
+            {{pass}}
+        {{pass}}
+    </ul>
 </div>
 
 <!-- iframe loads fristuff page with id of friend and loads the avalible items-->
 <iframe id=frdcont src={{=avacontent}} align='right' width='60%' height='700px' frameborder="0"></iframe>
 
 <script>
+    
+//Turns div box on sidebar light blue
 $( ".frdbox" ).on( "mouseover", function() {
   $( this ).css( "background-color", "#3c9dd0" );
   $( this ).css( "color", "#173d51" );
 });
-    
+//turns div box on sidebar back on mouse out
 $( ".frdbox" ).on( "mouseout", function() {
   $( this ).css( "background-color", "#2f4551" );
   $( this ).css( "color", "#e5f1f7" );

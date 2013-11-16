@@ -1,0 +1,63 @@
+{{extend 'layout.html'}}
+
+
+<div class="four columns alpha">
+  <img id="profile-image" align="left" width="200px" height="200px" style="padding-right: 25px" src="{{=URL('download',args=image)}}" />
+  <h2 id="nickname">{{=nickname}}</h2>
+  <p id="name">{{=name}}</p>
+    <p id="rep"> reputation: 0% (0)</p>
+  <br>
+</div>
+
+{{=A('Edit', _href=URL('editprofile'), _class='btn')}}
+{{=A('Add as Friend', _href=URL('editprofile'), _class='btn')}}
+{{=A('Tickle', _href=URL('index'), _class='btn')}}
+{{=A('Send Message', _href=URL('index'), _class='btn')}}
+
+<style type="text/css" media="screen, print, projection">
+#container {
+  width: 800px ;
+  margin-left: auto ;
+  margin-right: auto ;
+}
+#content {
+  margin-left: 200px;
+}
+#navbar {
+  border-style:solid;
+  border-width:5px;
+  float: right;
+  width: 225px;
+}
+</style>
+
+<div id="container2">
+<div id="right">
+    <br>
+    <br>
+    <br>
+    <b>Name</b>: {{=db.person.name}}<br>
+    <b>About Me</b>: {{=db.person.About_me}}<br>
+    <b>Gender</b>: {{=db.person.gender}}<br>
+    <b>Phone Number</b>: {{=db.person.phone_number}}<br>
+    <b>Email</b>: {{=db.person.email}}<br>
+    <b>Location</b>: {{=db.person.my_location}}<br>
+    <b>Reputation</b>: {{=db.person.rep}}<br>
+
+
+</div>
+</div>
+    <br clear="left">
+    <br>
+{{=record}}
+<h3>All Items</h3>
+Add grid
+<br>
+<h3>Borrowed Items</h3>
+Add grid
+<br>
+<h3>Lent Items </h3>
+Add grid
+<h3>Friends</h3>
+<h6>ADD SOME FRIENDS </h6>
+<br>

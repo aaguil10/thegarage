@@ -44,6 +44,11 @@ auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
 ## create all tables needed by auth if not custom tables
+auth.settings.extra_fields['auth_user']= [
+  Field('nickname', 'string' ,length=128,
+        requires=IS_NOT_IN_DB(db, 'auth_user.nickname')),
+  Field('image', 'upload')
+]
 auth.define_tables(username=False, signature=False)
 
 ## configure email

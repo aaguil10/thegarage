@@ -20,35 +20,77 @@ def index():
     """
     return dict()
 
-def create():
-    form=SQLFORM(db.items)
+def editprofile():
+    form = SQLFORM(db.person)
     if form.process().accepted:
-        session.flash = 'List created! Click buttons below to view/edit lists.'
-        redirect(URL('default', 'checkdebuger', ))
+        session.flash = 'Profile edited!'
+        redirect(URL('index'))
     elif form.errors:
         response.flash = 'form has errors'
     else:
         response.flash = 'please fill the form'
-        
-        
-    frd=SQLFORM(db.friend)
-    if frd.process().accepted:
-        session.flash = 'List created! Click buttons below to view/edit lists.'
-        redirect(URL('default', 'checkdebuger', ))
+    return dict(form=form)
+
+@auth.requires_login()
+def profilepg():
+    nickname = request.args[0]
+    response.title = nickname + "'s Profile"
+    result = db(db.auth_user.nickname == nickname).select()[0]
+    name = result.first_name + " " + result.last_name
+    image = result.image
+    currentUser = get_uemail()
+    q = (db.items.email == get_uemail())
+    record = db().select(db.person.ALL)
+    record = SQLTABLE(db().select(db.person.ALL),
+                       upload = URL('download'), # allows pics preview
+                       headers='fieldname:capitalize')
+    """
+    form = SQLFORM(db.person, upload=URL(r=request, c='default', f='download'))
+    currentUser = get_uemail()
+    q = (db.items.email == get_uemail())
+    grid = SQLFORM.grid(q, create=True, csv=False, searchable=True,
+        fields=[db.items.item_owner, db.items.title, db.items.description],
+        details=True, editable=True, deletable=True)
+    q2 = (db.items.borrower == get_uemail())
+    grid2 = SQLFORM.grid(q2, create=False, csv=False, searchable=True,
+        fields=[db.items.item_owner, db.items.title, db.items.description],
+        details=True, editable=False)
+    """
+    return dict(nickname=nickname, name=name, image=image, record=record)
+
+
+def profile():
+    person = db.person(request.args(0)) or redirect(URL('index'))
+    form = SQLFORM(db.person, upload=URL(r=request, c='default', f='download'))
+    currentUser = get_uemail()
+    q = (db.items.email == get_uemail())
+    grid = SQLFORM.grid(q, create=True, csv=False, searchable=True,
+        fields=[db.items.item_owner, db.items.title, db.items.description],
+        details=True, editable=True, deletable=True)
+    q2 = (db.items.borrower == get_uemail())
+    grid2 = SQLFORM.grid(q2, create=False, csv=False, searchable=True,
+        fields=[db.items.item_owner, db.items.title, db.items.description],
+        details=True, editable=False)
+    q3 = (db.items.item_owner == currentUser)
+    grid3 = SQLFORM.grid(q3, create=False, csv=False, searchable=True,
+        fields=[db.items.item_owner, db.items.title, db.items.description],
+        details=True, editable=True, deletable=True)
+
+    return dict(grid = grid, grid2=grid2, grid3=grid3, form=form, person=person)
+
+
+
+@auth.requires_login()
+def create():
+    form = SQLFORM(db.items)
+    if form.process().accepted:
+        session.flash = 'Item added!'
+        redirect(URL('profile'))
     elif form.errors:
         response.flash = 'form has errors'
     else:
         response.flash = 'please fill the form'
-        
-    prs=SQLFORM(db.person)
-    if prs.process().accepted:
-        session.flash = 'List created! Click buttons below to view/edit lists.'
-        redirect(URL('default', 'checkdebuger', ))
-    elif form.errors:
-        response.flash = 'form has errors'
-    else:
-        response.flash = 'please fill the form'
-    return dict(form=form, frd=frd, prs=prs, )
+    return dict(form=form)
 
 
 def About_us():

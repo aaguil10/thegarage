@@ -1,5 +1,144 @@
 {{extend 'layout.html'}}
-<!--  -->
 
-<h1>You are currently borowing...</h1>
-{{=BEAUTIFY(response._vars)}}
+<h4>
+    Items you are borrowing
+</h4>
+
+<div id="borrowing">
+    <h4>
+        From
+    </h4>
+    <table border="1">
+        <tr id="linearBg">
+            <td>
+                User Email
+            </td>
+            <td>
+                Item Description
+            </td>
+            <td>
+                Borrowed On
+            </td>
+            <td>
+                Borrowed Until
+            </td>
+            <td style="min-width: 125px">
+                Image
+            </td>
+        </tr>
+        {{for r in items1:}}
+                <tr>
+                    <td>
+                        {{=r.item_owner}}
+                    </td>
+                    <td>
+                        {{=r.description}}
+                    </td>
+                    <td>
+                        {{=r.start_date}}
+                    </td>
+                    <td>
+                        {{=r.end_date}}
+                    </td>
+                    <td style="max-width: 300px; overflow: hidden">
+                        <img src="{{=URL('download', args=r.item_image)}}" />
+                    </td>
+                </tr>
+        {{pass}}
+    </table>
+</div>
+
+<br>
+
+<h4>
+    Items you are lending
+</h4>
+
+<div id="borrowedOut">
+    <h4>
+       To
+    </h4>
+    <table border="1">
+        <tr id="linearBg">
+            <td>
+                User Email
+            </td>
+            <td>
+                Item Description
+            </td>
+            <td>
+                Borrowed On
+            </td>
+            <td>
+                Borrowed Until
+            </td>
+            <td style="min-width: 125px">
+                Image
+            </td>
+        </tr>
+        {{for r in items2:}}
+                <tr>
+                    <td>
+                        {{=r.borrower}}
+                    </td>
+                    <td>
+                        {{=r.description}}
+                    </td>
+                    <td>
+                        {{=r.start_date}}
+                    </td>
+                    <td>
+                        {{=r.end_date}}
+                    </td>
+                    <td style="max-width: 300px; overflow: hidden">
+                        <img src="{{=URL('download', args=r.item_image)}}" />
+                    </td>
+                </tr>
+        {{pass}}
+    </table>
+</div>
+
+
+<style type="text/css">
+    #borrowing
+    {
+        position:relative;
+        overflow:hidden;
+        border:thin black solid;
+        border-style:solid none none solid;
+        padding:10px;
+        display:block;
+    }
+    
+    #borrowedOut
+    {
+        position:relative;
+        overflow:hidden;
+        border:thin black solid;
+        border-style:solid none none solid;
+        padding:10px;
+        display:block;
+    }
+
+    #linearBg {
+        /* fallback */
+        color: white;
+        background-color: #1a82f7;
+        background-repeat: repeat-x;
+
+        /* Safari 4-5, Chrome 1-9 */
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1a82f7), to(#2F2727));
+
+        /* Safari 5.1, Chrome 10+ */
+        background: -webkit-linear-gradient(top, #2F2727, #1a82f7);
+
+        /* Firefox 3.6+ */
+        background: -moz-linear-gradient(top, #2F2727, #1a82f7);
+
+        /* IE 10 */
+        background: -ms-linear-gradient(top, #2F2727, #1a82f7);
+
+        /* Opera 11.10+ */
+        background: -o-linear-gradient(top, #2F2727, #1a82f7);
+    }
+</style>

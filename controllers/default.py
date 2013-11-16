@@ -106,7 +106,11 @@ def available():
     
     return dict(avacontent=avacontent, listfrd1=listfrd1, listfrd2=listfrd2, )
 
+@auth.requires_login()
 def Borrowed():
+    items1 = db(db.items.borrower==auth.user.email).select()
+    items2 = db(db.items.item_owner==auth.user.email).select()
+    return dict(items1=items1, items2=items2)
     return dict()
 
 def inst_fri():

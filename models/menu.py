@@ -23,8 +23,14 @@ response.google_analytics_id = None
 ## this is the main application menu add/remove items as required
 #########################################################################
 
+def get_nickname():
+    if auth.user:
+        return auth.user.nickname
+    else:
+        return 'None'
+
 response.menu = [
-    (T('Your Garage'), False, URL('default', 'index'), [] )
+    (T('Your Garage'), False, URL('default', 'profilepg', args=get_nickname()), [] )
 ]
 
 DEVELOPMENT_MENU = True

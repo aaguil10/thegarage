@@ -18,7 +18,8 @@ def index():
     if you need a simple wiki simple replace the two lines below with:
     return auth.wiki()
     """
-    return dict()
+    recentItems = db().select(db.items.ALL, orderby=~db.items.id)
+    return dict(recentItems=recentItems)
 
 def editprofile():
     form = SQLFORM(db.person)
@@ -109,9 +110,8 @@ def available():
 @auth.requires_login()
 def Borrowed():
     items1 = db(db.items.borrower==auth.user.email).select()
-    items2 = db(db.items.item_owner==auth.user.email).select()
+    items2 = db(db.items.item_owner==auth.user.id).select()
     return dict(items1=items1, items2=items2)
-    return dict()
 
 def inst_fri():
     return dict()

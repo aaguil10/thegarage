@@ -88,34 +88,18 @@
 <!-- main holds the beboxes. takes 80% of page while side bar takes 20% of the page -->
 	<div id="main">
 		<h2>Recently Borrowed</h2>
-		<div class="bebox" align="center">
+        {{num = 0}}
+        {{for recent in recentItems:}}
+        {{if num < 4:}}
+        <div class="bebox" alight="center">
             <div class="beboxTitle">
-                Blue Jeans (New)
+                {{=recent.title}}
             </div>
-            <img src="http://images01.olx.in/ui/6/88/96/1366443904_503408296_4-jeans-Home-Lifestyle.jpg" alt="Smiley face" max-height:100%>
+             <img src="{{=URL('download', args=recent.item_image)}}" />
         </div>
-
-        <div class="bebox" align="center">
-            <div class="beboxTitle">
-                Little Brother
-            </div>
-            <img src="http://www.artfire.com/uploads/product/6/426/55426/2755426/2755426/large/for_sale_little_brother_by_big_brother_boys_custom_toddler_kids_shirt_24c9a2eb.jpg" alt="Smiley face" >
-        </div>
-
-        <div class="bebox" align="center">
-             <div class="beboxTitle">
-                Assassins Creed III(XBox 360)
-            </div>
-            <img src="http://st.gdefon.com/wallpapers_original/wallpapers/345928_assassins-creed_yecio_ubijca_klinki_igra_1280x1024_(www.GdeFon.ru).jpg" alt="Smiley face" >
-        </div>
-        
-        <div class="bebox" align="center">
-             <div class="beboxTitle">
-                CS 101 Textbook
-            </div>
-            <img src="http://upload.wikimedia.org/wikipedia/en/4/41/Clrs3.jpeg" alt="Smiley face" >
-        </div>
-
+        {{num = num+1}}
+        {{pass}}
+        {{pass}}
 	</div>
     
 <!-- code for side bar, should make a categories page and link that to the buttons. -->

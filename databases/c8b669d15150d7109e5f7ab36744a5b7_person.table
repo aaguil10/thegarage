@@ -142,7 +142,7 @@ sg9
 I00
 sg10
 g11
-ssS'id'
+ssS'email'
 p41
 (dp42
 g14
@@ -150,14 +150,14 @@ I512
 sg15
 I00
 sg16
-I1
+I2
 sg17
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
+S'CHAR(512)'
 p43
 sg19
 I00
 sg20
-S'id'
+S'string'
 p44
 ssS'about_me'
 p45
@@ -244,7 +244,7 @@ I00
 sg20
 S'reference friend'
 p64
-ssS'email'
+ssS'id'
 p65
 (dp66
 g14
@@ -252,13 +252,13 @@ I512
 sg15
 I00
 sg16
-I2
+I1
 sg17
-S'CHAR(512)'
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
 p67
 sg19
 I00
 sg20
-S'string'
+S'id'
 p68
 ss.

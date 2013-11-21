@@ -9,10 +9,19 @@
   <br>
 </div>
 
-{{=A('Edit', _href=URL('editprofile'), _class='btn')}}
 {{=A('Add as Friend', _href=URL('editprofile'), _class='btn')}}
 {{=A('Tickle', _href=URL('index'), _class='btn')}}
 {{=A('Send Message', _href=URL('index'), _class='btn')}}
+
+<style type="text/css" media="screen, print, projection">
+#body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+ul#tabs li { display: inline; }
+ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+ul#tabs li a:hover { background-color: #f1f0ee; }
+ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+div.tabContent.hide { display: none; }
 
 <style type="text/css" media="screen, print, projection">
 #container {
@@ -36,28 +45,117 @@
     <br>
     <br>
     <br>
-    <b>Name</b>: {{=db.person.name}}<br>
-    <b>About Me</b>: {{=db.person.About_me}}<br>
-    <b>Gender</b>: {{=db.person.gender}}<br>
-    <b>Phone Number</b>: {{=db.person.phone_number}}<br>
-    <b>Email</b>: {{=db.person.email}}<br>
-    <b>Location</b>: {{=db.person.my_location}}<br>
-    <b>Reputation</b>: {{=db.person.rep}}<br>
+
 
 
 </div>
 </div>
     <br clear="left">
     <br>
-{{=record}}
-<h3>All Items</h3>
-Add grid
-<br>
-<h3>Borrowed Items</h3>
-Add grid
-<br>
-<h3>Lent Items </h3>
-Add grid
-<h3>Friends</h3>
-<h6>ADD SOME FRIENDS </h6>
-<br>
+
+<script type="text/javascript">
+    //<![CDATA[
+
+    var tabLinks = new Array();
+    var contentDivs = new Array();
+
+    function init() {
+
+      // Grab the tab links and content divs from the page
+      var tabListItems = document.getElementById('tabs').childNodes;
+      for ( var i = 0; i < tabListItems.length; i++ ) {
+        if ( tabListItems[i].nodeName == "LI" ) {
+          var tabLink = getFirstChildWithTagName( tabListItems[i], 'A' );
+          var id = getHash( tabLink.getAttribute('href') );
+          tabLinks[id] = tabLink;
+          contentDivs[id] = document.getElementById( id );
+        }
+      }
+
+      // Assign onclick events to the tab links, and
+      // highlight the first tab
+      var i = 0;
+
+      for ( var id in tabLinks ) {
+        tabLinks[id].onclick = showTab;
+        tabLinks[id].onfocus = function() { this.blur() };
+        if ( i == 0 ) tabLinks[id].className = 'selected';
+        i++;
+      }
+
+      // Hide all content divs except the first
+      var i = 0;
+      for ( var id in contentDivs ) {
+        if ( i != 0 ) contentDivs[id].className = 'tabContent hide';
+        i++;
+      }
+    }
+
+    function showTab() {
+      var selectedId = getHash( this.getAttribute('href') );
+
+      // Highlight the selected tab, and dim all others.
+      // Also show the selected content div, and hide all others.
+      for ( var id in contentDivs ) {
+        if ( id == selectedId ) {
+          tabLinks[id].className = 'selected';
+          contentDivs[id].className = 'tabContent';
+        } else {
+          tabLinks[id].className = '';
+          contentDivs[id].className = 'tabContent hide';
+        }
+      }
+
+      // Stop the browser following the link
+      return false;
+    }
+
+    function getFirstChildWithTagName( element, tagName ) {
+      for ( var i = 0; i < element.childNodes.length; i++ ) {
+        if ( element.childNodes[i].nodeName == tagName ) return element.childNodes[i];
+      }
+    }
+
+    function getHash( url ) {
+      var hashPos = url.lastIndexOf ( '#' );
+      return url.substring( hashPos + 1 );
+    }
+
+    //]]>
+    </script>
+ 
+  <body onload="init()">
+
+    <ul id="tabs">
+      <li><a href="#allItems">All Items</a></li>
+      <li><a href="#borrowed">Borrowed Items</a></li>
+      <li><a href="#lentItems">Lent Items</a></li>
+      <li><a href="#friends">Friends</a></li>
+    </ul>
+
+    <div class="tabContent" id="allItems">
+      <h2>All Items</h2>
+      <div>
+          <p>Stuff you listed. </p>
+      </div>
+    </div>
+
+    <div class="tabContent" id="borrowed">
+      <h2>Borrowed Items</h2>
+      <div>
+        <p>Save money by borrowing!</p>
+      </div>
+    </div>
+
+      <div class="tabContent" id="lentItems">
+      <h2>Lent Items</h2>
+      <div>
+        <p>Stuff you're mooching off others. </p>
+      </div>
+    </div>
+      
+    <div class="tabContent" id="friends">
+      <h2>Friends</h2>
+      <div>
+        <p>Add some friends. Don't be frugal jerks though.</p>
+      </div>

@@ -33,6 +33,42 @@ def editprofile():
     return dict(form=form)
 
 @auth.requires_login()
+def friends():
+    friends = db(User.id==Link.friender)(Link.target==me).select(orderby=alphabetical)
+    requests = db(User.id==Link.target)(Link.friender==me).select(orderby=alphabetical)
+    form = SQLFORM.factory(Field('name',requires=IS_NOT_EMPTY()))
+    if form.accepts(request):
+        tokens = form.vars.name.split()
+        query = reduce(lambda a,b:a&b,
+                       [User.first_name.contains(k)|User.last_name.contains(k) \
+                            for k in tokens])
+        people = db(query).select(orderby=alphabetical)
+    else:
+        people = []
+    return locals()
+
+# this is the Ajax callback
+@auth.requires_login()
+def friendship():
+    """AJAX callback!"""
+    if request.env.request_method!='POST': raise HTTP(400)
+    if a0=='request' and not Link(friender=a1,target=me):
+        # insert a new friendship request
+        Link.insert(friender=me,target=a1)
+    elif a0=='accept':
+        # accept an existing friendship request
+        db(Link.target==me)(Link.friender==a1).update(accepted=True)
+        if not db(Link.friender==me)(Link.target==a1).count():
+            Link.insert(friender=me,target=a1)
+    elif a0=='deny':
+        # deny an existing friendship request
+        db(Link.target==me)(Link.friender==a1).delete()
+    elif a0=='remove':
+        # delete a previous friendship request
+        db(Link.friender==me)(Link.target==a1).delete()
+
+
+@auth.requires_login()
 def profilepg():
     nickname = request.args[0]
     response.title = nickname + "'s Profile"
@@ -45,40 +81,7 @@ def profilepg():
     record = SQLTABLE(db().select(db.person.ALL),
                        upload = URL('download'), # allows pics preview
                        headers='fieldname:capitalize')
-    """
-    form = SQLFORM(db.person, upload=URL(r=request, c='default', f='download'))
-    currentUser = get_uemail()
-    q = (db.items.email == get_uemail())
-    grid = SQLFORM.grid(q, create=True, csv=False, searchable=True,
-        fields=[db.items.item_owner, db.items.title, db.items.description],
-        details=True, editable=True, deletable=True)
-    q2 = (db.items.borrower == get_uemail())
-    grid2 = SQLFORM.grid(q2, create=False, csv=False, searchable=True,
-        fields=[db.items.item_owner, db.items.title, db.items.description],
-        details=True, editable=False)
-    """
     return dict(nickname=nickname, name=name, image=image, record=record)
-
-
-def profile():
-    person = db.person(request.args(0)) or redirect(URL('index'))
-    form = SQLFORM(db.person, upload=URL(r=request, c='default', f='download'))
-    currentUser = get_uemail()
-    q = (db.items.email == get_uemail())
-    grid = SQLFORM.grid(q, create=True, csv=False, searchable=True,
-        fields=[db.items.item_owner, db.items.title, db.items.description],
-        details=True, editable=True, deletable=True)
-    q2 = (db.items.borrower == get_uemail())
-    grid2 = SQLFORM.grid(q2, create=False, csv=False, searchable=True,
-        fields=[db.items.item_owner, db.items.title, db.items.description],
-        details=True, editable=False)
-    q3 = (db.items.item_owner == currentUser)
-    grid3 = SQLFORM.grid(q3, create=False, csv=False, searchable=True,
-        fields=[db.items.item_owner, db.items.title, db.items.description],
-        details=True, editable=True, deletable=True)
-
-    return dict(grid = grid, grid2=grid2, grid3=grid3, form=form, person=person)
-
 
 
 @auth.requires_login()

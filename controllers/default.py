@@ -18,7 +18,7 @@ def index():
     if you need a simple wiki simple replace the two lines below with:
     return auth.wiki()
     """
-	 recentItems = db().select(db.items.ALL)
+    recentItems = db().select(db.items.ALL)
     return dict(recentItems = recentItems)
 
 def editprofile():

@@ -37,6 +37,8 @@ db.define_table('items',
                 Field('tag', 'list:reference tag'),
             )
 
+db.items.borrower.requires = [IS_IN_DB(db, db.auth_user.email)]
+
 #This is how we will keep track of the users friends
 db.define_table('friend',
                 Field('pOne', db.auth_user, default=None),
